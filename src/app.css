@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Castoro+Titling&family=JetBrains+Mono:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gruppo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Imbue&display=swap');
+@import 'material-symbols';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #app {
+    margin: 0;
+    height: 100vh;
+    @apply font-castoro;
+}
+
+.btn {
+    @apply py-2.5 px-6 rounded-lg
+    text-sm text-white font-medium
+    bg-primary dark:bg-primary-light
+    hover:bg-primary-dark dark:hover:bg-primary
+}
+
+.btn-outline {
+    @apply py-2.5 px-6 rounded-lg
+    text-sm text-primary dark:text-primary-lighter font-medium
+    border border-primary dark:border-primary-lighter
+    hover:bg-primary-dark dark:hover:bg-primary-lighter hover:text-white dark:hover:text-white
+}
