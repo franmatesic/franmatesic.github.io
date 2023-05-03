@@ -2,6 +2,6 @@
 
 1. `npm run build`
 
-2. commit changes
+2. Check for ignored files in `/dist` and commit changes
 
 3. `git subtree push --prefix dist origin gh-pages`
