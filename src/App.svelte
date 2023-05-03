@@ -1,5 +1,4 @@
 <script>
-
     import {onMount} from 'svelte';
     import {darkTheme, loadTheme, switchTheme} from './lib/theme.js';
     import Logo from './components/Logo.svelte';
