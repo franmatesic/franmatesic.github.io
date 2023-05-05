@@ -10,7 +10,18 @@
 html, body, #app {
     margin: 0;
     height: 100vh;
-    @apply font-castoro;
+}
+
+h1 {
+    @apply text-2xl font-semibold;
+}
+
+h2 {
+    @apply text-lg font-semibold;
+}
+
+pre[class^="language"] {
+    @apply rounded-b-lg m-0 !important;
 }
 
 .btn {

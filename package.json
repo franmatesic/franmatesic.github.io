@@ -4,19 +4,26 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "run-p dev:*",
+    "build": "run-s build:*",
+    "dev:routify": "routify",
+    "build:routify": "routify -b",
+    "dev:svite": "vite",
+    "build:svite": "vite build"
   },
   "devDependencies": {
+    "@roxi/routify": "^2.18.12",
     "@sveltejs/vite-plugin-svelte": "^2.0.3",
     "autoprefixer": "^10.4.14",
+    "mdsvex": "^0.10.6",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.23",
     "svelte": "^3.55.1",
     "tailwindcss": "^3.3.2",
     "vite": "^4.2.0"
   },
   "dependencies": {
+    "highlight.js": "^11.8.0",
     "material-symbols": "^0.5.5"
   }
 }
