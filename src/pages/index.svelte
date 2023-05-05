@@ -1,13 +1,11 @@
 <script>
-    import Logo from '../components/Logo.svelte';
+    import SplashLogo from '../components/SplashLogo.svelte';
 </script>
 
 <div class="flex justify-center mt-6 text-dark dark:text-light transition-all">
 
-  <div class="flex self-center flex-col gap-4">
-    <Logo/>
-    <span class="border-t-2 border-primary dark:divide-primary-light"></span>
-    <span class="font-bold text-4xl font-castoro">Fran Matešić</span>
+  <div class="flex self-center flex-col w-64 gap-4 mt-32">
+    <SplashLogo/>
   </div>
 
   <!--  <div class="fixed flex gap-32 mb-32 self-end">-->

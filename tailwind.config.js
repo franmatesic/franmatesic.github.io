@@ -19,11 +19,13 @@ export default {
                 light: {
                     DEFAULT: colors.neutral['100'],
                     light: colors.neutral['50'],
-                    dark: colors.neutral['200']
+                    dark: colors.neutral['200'],
+                    darker: colors.neutral['400']
                 },
                 dark: {
                     DEFAULT: colors.neutral['800'],
                     light: colors.neutral['700'],
+                    lighter: colors.neutral['500'],
                     dark: colors.neutral['900']
                 },
                 success: {

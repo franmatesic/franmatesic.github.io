@@ -1,13 +1,11 @@
 ---
 title: Test
 author: Fran Matešić
-date: 03.05.2023.
+date: 2023-05-03
 description: Test description
+thumbnail: test.png
+keywords: test
 ---
-
-<script>
-    import Code from '../../components/Code.svelte';
-</script>
 
 # Hello World
 
@@ -18,16 +16,11 @@ description: Test description
 - tick
     - second tick
 
-<Code title="main.js">
-
 ```js
 let code = 10;
 ```
-</Code>
 
 <h1>Title</h1>
-
-<Code title="Java">
 
 ```java
 public class Main() {
@@ -36,4 +29,3 @@ public class Main() {
     }
 }
 ```
-</Code>
