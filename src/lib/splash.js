@@ -7,8 +7,8 @@ export const setSplash = () => {
     localStorage.splash = new Date().getTime();
 };
 
-export const loadSplash = () => {
-    if (!localStorage.splash || localStorage.splash < new Date().getTime() - 86400000) {
+export const loadSplash = (refreshAfter) => {
+    if (!localStorage.splash || localStorage.splash < new Date().getTime() - refreshAfter) {
         return;
     }
     runSplash.set(false);

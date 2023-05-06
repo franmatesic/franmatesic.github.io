@@ -1,6 +1,15 @@
 <script>
     import {onMount} from 'svelte';
     import {runSplash, setSplash} from '../lib/splash.js';
+    import {darkTheme} from '../lib/theme.js';
+
+    export let revealDuration = 1000;
+    export let beginTransform = revealDuration + 800;
+    export let transformDuration = 500;
+
+    const revealS = `${revealDuration / 1000.0}s`;
+    const beginS = `${beginTransform / 1000.0}s`;
+    const transformS = `${transformDuration / 1000.0}s`;
 
     let windowWidth, windowHeight;
     let interval;
@@ -13,32 +22,25 @@
         if (!$runSplash) {
             return;
         }
-
         const logo = document.getElementById('layoutNavLogo');
         const bound = logo.getBoundingClientRect();
-
         svgWidth = windowWidth;
         svgHeight = windowHeight;
-
 
         setTimeout(() => {
             clearInterval(interval);
             setSplash();
-        }, 2000);
-        setTimeout(() => transformSvg(logo.offsetWidth, bound.left, bound.top), 1200);
+        }, beginTransform + transformDuration);
+        setTimeout(() => transformSvg(logo.offsetWidth, bound.left, bound.top), beginTransform);
     });
 
     const transformSvg = (size, left, top) => {
-        const tick = 80;
+        const tick = transformDuration / 10;
         interval = setInterval(() => {
             svgWidth -= (windowWidth - size) / tick;
             svgHeight -= (windowHeight - size) / tick;
-            if (svgLeft < left) {
-                svgLeft += left / tick;
-            }
-            if (svgTop < top) {
-                svgTop += top / tick;
-            }
+            svgLeft += left / tick;
+            svgTop += top / tick;
         }, 10);
     };
 
@@ -51,7 +53,7 @@
 <svelte:window bind:innerWidth={windowWidth} bind:innerHeight={windowHeight}/>
 
 {#if $runSplash}
-  <div class="fixed" style={style}>
+  <div class="fixed z-50" style={style}>
     <svg viewBox="0 0 100 100" width={svgWidth} height={svgHeight}>
 
       <defs>
@@ -69,7 +71,7 @@
                    fill="freeze"
                    from="0"
                    to="60%"
-                   dur="1s"/>
+                   dur={revealS}/>
         </circle>
       </clipPath>
 
@@ -78,53 +80,63 @@
                  fill="freeze"
                  from="0"
                  to="70"
-                 dur="0.8s"/>
+                 dur={revealS}/>
         <animate attributeName="x"
                  fill="freeze"
                  from="50"
                  to="15"
-                 dur="0.8s"/>
+                 dur={revealS}/>
+
         <animate attributeName="width"
                  fill="freeze"
                  from="70"
                  to="100"
-                 begin="1.2s"
-                 dur="0.8s"/>
+                 begin={beginS}
+                 dur={transformS}/>
         <animate attributeName="x"
                  fill="freeze"
                  from="15"
                  to="0"
-                 begin="1.2s"
-                 dur="0.8s"/>
+                 begin={beginS}
+                 dur={transformS}/>
         <animate attributeName="height"
                  fill="freeze"
                  from="0.5"
                  to="100%"
-                 begin="1.2s"
-                 dur="0.8s"/>
+                 begin={beginS}
+                 dur={transformS}/>
         <animate attributeName="rx"
                  fill="freeze"
                  from="0"
                  to="8"
-                 begin="1.2s"
-                 dur="0.8s"/>
+                 begin={beginS}
+                 dur={transformS}/>
         <animateMotion path="M 0 0 L 0 -80"
                        fill="freeze"
-                       begin="1.2s"
-                       dur="0.8s"/>
+                       begin={beginS}
+                       dur={transformS}/>
       </rect>
 
       <use href="#logo" clip-path="url(#clip)" transform-origin="50% 50%">
-        <animate attributeName="fill"
-                 from="white"
-                 to="black"
-                 dur="1s"/>
-        <animate attributeName="fill"
-                 fill="freeze"
-                 from="black"
-                 to="white"
-                 begin="1.2s"
-                 dur="0.8s"/>
+        {#if $darkTheme}
+          <animate attributeName="fill"
+                   fill="freeze"
+                   from="black"
+                   to="white"
+                   dur={revealS}/>
+        {:else}
+          <animate attributeName="fill"
+                   from="white"
+                   to="black"
+                   dur={revealS}/>
+          <animate attributeName="fill"
+                   fill="freeze"
+                   from="black"
+                   to="white"
+                   begin={beginS}
+                   dur={transformS}/>
+        {/if}
+
       </use>
     </svg>
   </div>

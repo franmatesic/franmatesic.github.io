@@ -1,50 +1,51 @@
 <script>
-    import {params, url} from '@roxi/routify';
+    import {goto, params, url} from '@roxi/routify';
+    import {tutorials} from '../../lib/tutorials.js';
     import {onMount} from 'svelte';
 
-    let allTutorials = [];
-    let search = '';
+    let query;
 
-    onMount(() => loadTutorials());
-
-    const loadTutorials = () => {
-        const files = import.meta.glob('./*.svx');
-
-        for (const key of Object.keys(files)) {
-            files[key]().then(module => {
-                const tutorial = Object.assign(module.metadata, {key: key.replace('.svx', '')});
-                allTutorials = [...allTutorials, tutorial];
-            });
+    onMount(() => {
+        if (Object.keys($params).length > 0) {
+            query = $params.search;
         }
+    });
+
+    const search = () => {
+        if (!query || query.length === 0) {
+            $goto('./');
+            return;
+        }
+        $goto('./', {search: query});
     };
 
-    //TODO query params with dynamic search
-    $: console.log($params);
-
-    $: tutorials = allTutorials.filter(t => {
-        const searchTerm = search.toLowerCase();
-        const keywords = t.keywords.toLowerCase().split(',');
-        return t.title.toLowerCase().includes(searchTerm) || t.description.toLowerCase().includes(searchTerm) || keywords.includes(searchTerm);
+    $: filteredTutorials = $tutorials.filter(t => {
+        if (Object.keys($params).length === 0) {
+            return true;
+        }
+        const searchTerm = $params.search.toLowerCase();
+        return t.title.toLowerCase().includes(searchTerm) || t.description.toLowerCase().includes(searchTerm) || t.keywords.includes(searchTerm);
     }).sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 </script>
 
-<div class="flex flex-col gap-8 p-8">
+<div class="flex flex-col gap-8 mt-12">
 
-  <div class="relative">
-    <input
-      class="peer w-full p-4 pl-12 text-sm text-dark-light bg-light-light border border-light-dark rounded-lg ring-primary outline-none caret-primary
-      dark:border-dark-light dark:bg-dark-dark focus:ring-2"
-      placeholder="Search..." bind:value={search}/>
+  <form on:submit|preventDefault={() => null}>
+    <div class="relative">
+      <input class="peer w-full p-4 pl-12 text-sm text-dark-light bg-light-light border border-light-dark rounded-lg ring-primary outline-none caret-primary
+             dark:border-dark-light dark:bg-dark-dark dark:text-light-dark focus:ring-2"
+             name="tutorialsSearch" placeholder="Search" autocomplete="off" bind:value={query} on:input={search}/>
 
-    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none peer-focus:text-primary">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none peer-focus:text-primary">
           <span class="material-symbols-outlined">
             search
           </span>
+      </div>
     </div>
-  </div>
+  </form>
 
   <div class="flex gap-4">
-    {#each tutorials as tutorial}
+    {#each filteredTutorials as tutorial}
 
       <a class="flex flex-col bg-light-light dark:bg-dark-dark border border-light-dark dark:border-dark-light rounded-lg p-4 basis-1/3"
          href={$url(tutorial.key)}>

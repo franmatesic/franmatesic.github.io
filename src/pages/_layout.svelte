@@ -3,6 +3,7 @@
     import {darkTheme, switchTheme} from '../lib/theme.js';
     import Logo from '../components/Logo.svelte';
     import {runSplash} from '../lib/splash.js';
+    import SplashLogo from '../components/SplashLogo.svelte';
 
     $: linkEquals = href => {
         const link = href.length > 1 ? href.substring(1).concat('/index') : '/index';
@@ -55,6 +56,8 @@
     </div>
 
   </nav>
+
+  <SplashLogo/>
 
   <div class="px-4 mx-auto max-w-5xl">
     <slot/>
