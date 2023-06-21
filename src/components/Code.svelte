@@ -34,7 +34,7 @@
     <div class="flex gap-1 items-center">
       <div class="text-sm text-success select-none" class:hidden={!copied}>Copied</div>
 
-      <button class="material-symbols-outlined" class:text-light-darker={!copied} class:btn-copied={copied} on:click={copyCode}>
+      <button class="material-symbols-outlined select-none" class:text-light-darker={!copied} class:btn-copied={copied} on:click={copyCode}>
         {copied ? 'done' : 'content_copy'}
       </button>
     </div>

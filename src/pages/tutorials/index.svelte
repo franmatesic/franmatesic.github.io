@@ -7,7 +7,7 @@
 
     onMount(() => {
         if (Object.keys($params).length > 0) {
-            query = $params.search;
+            query = $params.query;
         }
     });
 
@@ -16,14 +16,14 @@
             $goto('./');
             return;
         }
-        $goto('./', {search: query});
+        $goto('./', {query: query});
     };
 
     $: filteredTutorials = $tutorials.filter(t => {
         if (Object.keys($params).length === 0) {
             return true;
         }
-        const searchTerm = $params.search.toLowerCase();
+        const searchTerm = $params.query.toLowerCase();
         return t.title.toLowerCase().includes(searchTerm) || t.description.toLowerCase().includes(searchTerm) || t.keywords.includes(searchTerm);
     }).sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
 </script>
@@ -47,16 +47,20 @@
   <div class="flex gap-4">
     {#each filteredTutorials as tutorial}
 
-      <a class="flex flex-col bg-light-light dark:bg-dark-dark border border-light-dark dark:border-dark-light rounded-lg p-4 basis-1/3"
-         href={$url(tutorial.key)}>
+      <div
+        class="bg-light-light dark:bg-dark-dark border border-light-dark dark:border-dark-light hover:border-primary-dark hover:dark:border-primary-light rounded-lg basis-1/3">
+        <a class="flex flex-col p-4"
+           href={$url(tutorial.key)}>
 
-        <h1 class="mb-2">{tutorial.title}</h1>
-        <p class="text-sm mb-4">{new Date(tutorial.date).toLocaleDateString()}</p>
+          <h1 class="mb-2">{tutorial.title}</h1>
+          <p class="text-sm mb-4">{new Date(tutorial.date).toLocaleDateString()}</p>
 
-        <img src={`images/tutorials/${tutorial.thumbnail}`} alt="thumbnail"/>
+          <img src={`images/tutorials/${tutorial.thumbnail}`} alt="thumbnail"/>
 
-        <p class="italic">{tutorial.description}</p>
-      </a>
+          <p class="italic">{tutorial.description}</p>
+        </a>
+      </div>
+
 
     {/each}
   </div>
